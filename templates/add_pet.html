@@ -16,7 +16,12 @@
             <p>
                 {{field.label}}
                 {{field}}
-            </p>            
+            </p>
+            <p>
+                {% for err in field.errors %}
+                    {{err}}
+                {% endfor %}
+            </p>
 
       
         {% endfor %}

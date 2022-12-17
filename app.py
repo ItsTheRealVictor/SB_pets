@@ -11,10 +11,13 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = "farts"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pets.db'
 app.config['SQLALCHEMY_BINDS'] = {'testDB' : 'sqlite:///test_pets.db'}
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+
 
 app.debug = True
 debug = DebugToolbarExtension(app)
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+
+
 db = SQLAlchemy(app)
 app.app_context().push()
 
