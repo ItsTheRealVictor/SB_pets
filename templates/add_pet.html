@@ -9,7 +9,7 @@
 <body>
     <h1>Add a pet!</h1>
 
-    <form action='/' method="POST">
+    <form method="POST">
         {{ form.hidden_tag() }}
 
         {% for field in form if field.widget.input_type != 'hidden' %}

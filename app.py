@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = "farts"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pets.db'
 app.config['SQLALCHEMY_BINDS'] = {'testDB' : 'sqlite:///test_pets.db'}
-
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 app.debug = True
 debug = DebugToolbarExtension(app)
@@ -37,13 +37,10 @@ def main_page():
     pets = Pet.query.all()    
     return render_template('home.html', pets=pets)
 
-@app.route('/add_pet')
-def add_pet_form():
-    return render_template('add_pet.html')
 
 
 
-@app.route('/add_pets', methods=['GET', 'POST'])
+@app.route('/add_pet', methods=['GET', 'POST'])
 def add_pet():
     form = AddPetForm()
     if form.validate_on_submit():
