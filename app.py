@@ -1,13 +1,16 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from forms import AddPetForm
+
+
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = "farts"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blogly.db'
-app.config['SQLALCHEMY_BINDS'] = {'testDB' : 'sqlite:///test_blogly.db'}
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pets.db'
+app.config['SQLALCHEMY_BINDS'] = {'testDB' : 'sqlite:///test_pets.db'}
 
 
 app.debug = True
@@ -26,19 +29,49 @@ class Pet(db.Model):
     photo_url = db.Column(db.Text, nullable=True)
     age = db.Column(db.Integer, nullable=True)
     notes = db.Column(db.Text, nullable=True)
-    available = db.Column(db.Boolean, nullable=False, default='available')
-    j
+    available = db.Column(db.Boolean, nullable=False, default=1)
+    
 
-
-
-
-
-
-
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def main_page():
-    return render_template('home.html')
+    pets = Pet.query.all()    
+    return render_template('home.html', pets=pets)
+
+@app.route('/add_pet')
+def add_pet_form():
+    return render_template('add_pet.html')
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+@app.route('/add_pets', methods=['GET', 'POST'])
+def add_pet():
+    form = AddPetForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        species = form.species.data
+        photo_url = form.photo_url.data
+        age = form.age.data
+        notes = form.notes.data
+        
+        pet_to_add = Pet(name=name, 
+                         species=species, 
+                         photo_url=photo_url, 
+                         age=age, 
+                         notes=notes)
+        
+        db.session.add(pet_to_add)
+        db.session.commit()        
+        
+        return redirect('/')
+    else:
+        return render_template('add_pet.html', form=form)
+        
+
+
+
+
+
+
+
+# if __name__ == '__main__':
+#     app.run(debug=True)

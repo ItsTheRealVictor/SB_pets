@@ -8,5 +8,13 @@
 </head>
 <body>
     <h1>hi</h1>
+    <ul>
+        {% for pet in pets %}
+        <li>{{pet.name}}</li>
+            
+        {% endfor %}
+    </ul>
+
+    <a href="/add_pets">add a pet!</a>
 </body>
 </html>
