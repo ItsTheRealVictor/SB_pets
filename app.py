@@ -29,7 +29,9 @@ class Pet(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.Text, nullable=False)
     species = db.Column(db.Text, nullable=False)
-    photo_url = db.Column(db.Text, nullable=True)
+    
+    DEFAULT = 'https://cdn.vox-cdn.com/thumbor/-famZFxgMFo2h1HQ5UjIIcBszrI=/0x0:1920x1080/1600x900/cdn.vox-cdn.com/uploads/chorus_image/image/53254027/who_pokemon.0.jpg'
+    photo_url = db.Column(db.Text, nullable=True, default=DEFAULT)
     age = db.Column(db.Integer, nullable=True)
     notes = db.Column(db.Text, nullable=True)
     available = db.Column(db.Boolean, nullable=False, default=1)
@@ -66,6 +68,12 @@ def add_pet():
     else:
         return render_template('add_pet.html', form=form)
         
+@app.route('/pet_id_<int:pet_id>')
+def show_pet_info(pet_id):
+    pet = Pet.query.get_or_404(pet_id)
+    
+    return render_template('show_pet.html', pet=pet)
+    
 
 
 
