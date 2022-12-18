@@ -8,6 +8,11 @@
 </head>
 <body>
     <h1>Here is {{pet.name}}</h1>
-    <p>{{pet.name}} is {{pet.age}} years old</p>
+    <p>{{pet.name}} is a {{pet.species}} and they are {{pet.age}} years old</p>
+    <form action="/edit_pet_{{pet.id}}">
+        <button>
+            Edit Pet!
+        </button>
+    </form>
 </body>
 </html>

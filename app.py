@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, redirect
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from forms import AddPetForm
+from forms import AddPetForm, EditPetForm
 
 
 
@@ -74,7 +74,24 @@ def show_pet_info(pet_id):
     
     return render_template('show_pet.html', pet=pet)
     
-
+@app.route('/edit_pet_<int:pet_id>', methods=['GET','POST'])
+def edit_pet(pet_id):
+    pet = Pet.query.get_or_404(pet_id)
+    form = EditPetForm()
+    if form.validate_on_submit():
+        pet.photo_url = form.photo_url.data
+        pet.notes = form.notes.data
+        pet.available = form.available.data
+        
+        db.session.add(pet)
+        db.session.commit()
+        
+        return redirect('/')
+    else:
+        return render_template('edit_pet.html', pet=pet, form=form)
+    
+    
+    
 
 
 
