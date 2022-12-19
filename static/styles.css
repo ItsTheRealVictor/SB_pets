@@ -1,3 +1,15 @@
 body{
     background-color: steelblue;
 }
+
+.navbar-custom{
+    background-color:rgb(11, 74, 155);
+}
+
+.footer {
+    background-color: red;
+}
+
+.pet_list{
+    background-color:orange;
+}

@@ -1,19 +1,22 @@
 {% extends 'base.html' %}
 {% block title %} Here is the homepage {% endblock %}
-{% block content %}
-<body>
-        
-    <h1>hi</h1>
-    <ul>
-        {% for pet in pets %}
-        <li>
-            <a href="/pet_id_{{pet.id}}">{{pet.name}}</a>
-        </li>
-        
-        {% endfor %}
-    </ul>
+<html>
     
-    <a href="/add_pet">add a pet!</a>
+    <body>
+        {% block content %}
+        <h1>hi</h1>
+        <div class="pet_list">
+            <ul>
+                {% for pet in pets %}
+                <li>
+                    <a href="/pet_id_{{pet.id}}">{{pet.name}}</a>
+                </li>
+                
+                {% endfor %}
+            </ul>
+        </div>
+    
+        {% endblock %}
 </body>
+
 </html>
-{% endblock %}

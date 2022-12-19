@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, url_for
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -9,6 +9,7 @@ from forms import AddPetForm, EditPetForm
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = "farts"
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = -1
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pets.db'
 app.config['SQLALCHEMY_BINDS'] = {'testDB' : 'sqlite:///test_pets.db'}
 
