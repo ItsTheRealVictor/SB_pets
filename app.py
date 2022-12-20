@@ -38,7 +38,14 @@ class Pet(db.Model):
     available = db.Column(db.Boolean, nullable=False, default=1)
     
 
-@app.route('/', methods=['GET', 'POST'])
+
+
+@app.route('/')
+def landing_page():
+    return render_template('landing.html')
+
+
+@app.route('/main', methods=['GET', 'POST'])
 def main_page():
     pets = Pet.query.all()    
     return render_template('home.html', pets=pets)
@@ -67,7 +74,7 @@ def add_pet():
         db.session.add(pet_to_add)
         db.session.commit()        
         
-        return redirect('/')
+        return redirect('/main')
     else:
         return render_template('add_pet.html', form=form)
         
@@ -89,7 +96,7 @@ def edit_pet(pet_id):
         db.session.add(pet)
         db.session.commit()
         
-        return redirect('/')
+        return redirect('/main')
     else:
         return render_template('edit_pet.html', pet=pet, form=form)
     
@@ -99,7 +106,7 @@ def delete_pet(pet_id):
     
     db.session.delete(pet)
     db.session.commit()
-    return redirect('/')
+    return redirect('/main')
     
 
 

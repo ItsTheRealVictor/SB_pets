@@ -4,16 +4,19 @@
     
     <body>
         {% block content %}
-        <h1>hi</h1>
-        <div class="pet_list">
-            <ul>
-                {% for pet in pets %}
-                <li>
-                    <a href="/pet_id_{{pet.id}}">{{pet.name}}</a>
-                </li>
-                
-                {% endfor %}
-            </ul>
+        <div class="main_container">
+
+            <h1>Welcome to Victor's pet adoption agency</h1>
+            <div class="pet_list">
+                <ul>
+                    {% for pet in pets %}
+                    <li>
+                        <a href="/pet_id_{{pet.id}}">{{pet.name}}</a>
+                    </li>
+                    
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     
         {% endblock %}
