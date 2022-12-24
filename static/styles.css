@@ -11,6 +11,8 @@ h1 {
     background-color: olivedrab;
 }
 
+
+
 .main_landing_container{
     background-color: red;
     height: 200px;
@@ -43,6 +45,14 @@ h1 {
 
 .pet_list{
     background-color:orange;
+    /* display: flex; */
+    margin-left: 10%;
+    /* justify-content:center; */
+}
+
+.add_pet_container{
+    background-color: purple;
+    padding-left: 10%;
 }
 
 img{
