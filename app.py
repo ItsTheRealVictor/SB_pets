@@ -35,7 +35,7 @@ class Pet(db.Model):
     photo_url = db.Column(db.Text, nullable=True, default=DEFAULT)
     age = db.Column(db.Integer, nullable=True)
     notes = db.Column(db.Text, nullable=True)
-    available = db.Column(db.Boolean, nullable=False, default=1)
+    available = db.Column(db.Text, default='Available')
     
 
 
@@ -64,12 +64,14 @@ def add_pet():
             photo_url = Pet.DEFAULT
         age = form.age.data
         notes = form.notes.data
+        available = form.available.data
         
         pet_to_add = Pet(name=name, 
                          species=species, 
                          photo_url=photo_url, 
                          age=age, 
-                         notes=notes)
+                         notes=notes,
+                         available=available)
         
         db.session.add(pet_to_add)
         db.session.commit()        
@@ -90,13 +92,15 @@ def edit_pet(pet_id):
     form = EditPetForm()
     if form.validate_on_submit():
         pet.photo_url = form.photo_url.data
+        if not pet.photo_url:
+            pet.photo_url = Pet.DEFAULT
         pet.notes = form.notes.data
         pet.available = form.available.data
         
         db.session.add(pet)
         db.session.commit()
         
-        return redirect('/main')
+        return redirect(f'/pet_id_{pet_id}')
     else:
         return render_template('edit_pet.html', pet=pet, form=form)
     
