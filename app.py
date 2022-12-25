@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = "farts"
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = -1
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pets.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:admin@localhost/pet_db'
 app.config['SQLALCHEMY_BINDS'] = {'testDB' : 'sqlite:///test_pets.db'}
 
 
@@ -22,7 +22,7 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 db = SQLAlchemy(app)
 app.app_context().push()
 
-migrate = Migrate(app, db)
+# migrate = Migrate(app, db)
 
 class Pet(db.Model):
     __tablename__ = 'pets'
